@@ -7,7 +7,7 @@ const prisma = new PrismaClient()
 const app = express()
 app.use(express.json())
 
-const users = []
+//criar usuarios
 
 app.post('/usuarios', async (req, res) => {
 
@@ -18,13 +18,18 @@ app.post('/usuarios', async (req, res) => {
           age: req.body.age
         }
    })
-
    
     res.status(201).json(req.body)
 })
 
-app.get('/usuarios', (req, res) => {
+//listar usuarios
+
+app.get('/usuarios', async (req, res) => {
+
+    const users = await prisma.user.findMany()
+
     res.status(200).json(users)
+
 })
 
 app.listen(3000)
